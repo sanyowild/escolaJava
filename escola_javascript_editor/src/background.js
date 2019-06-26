@@ -5,6 +5,8 @@ import {
   createProtocol,
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
+// Adiciona a biblioteca path
+import path from 'path'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -16,10 +18,22 @@ protocol.registerStandardSchemes(['app'], { secure: true })
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600, webPreferences: {
-    nodeIntegration: true
-  } })
-
+  win = new BrowserWindow({ width: 800, height: 600, icon: path.join(__static, "icon-1.png"), webPreferences: {
+handlers: { emoji: () => {} }
+          },
+          syntax: {
+            highlight: text => hljs.highlightAuto(text).value
+          },
+handlers: { emoji: () => {} }
+          },
+          syntax: {
+            highlight: text => hljs.highlightAuto(text).value
+          },
+handlers: { emoji: () => {} }
+          },
+          syntax: {
+            highlight: text => hljs.highlightAuto(text).value
+          },
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
