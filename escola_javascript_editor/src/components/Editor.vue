@@ -1,5 +1,7 @@
 <template>
   <div class="editor">
+    <button @click="openFile" class="button is-small is-primary is-outlined">Abrir Arquivo</button>
+    <button @click="saveFile" class="button is-small is-info is-outlined">Salvar Arquivo</button>
     <quill-editor
       v-model="content"
       :options="editorOption"
@@ -50,7 +52,41 @@ export default {
       }
   }
   },
-  methods: {}
+  methods: {
+     openFile() {
+    // Abre arquivo
+    const [filepath] = remote.dialog.showOpenDialog({
+    properties: ["openFile"]
+  });
+  const context = this;
+  /* Verifica se o usuário não selecionou nenhum arquivo ou 
+ selecionou um formato de arquivo não suportado */	
+  if (filepath === undefined || !filepath.includes(".escola_js")) {
+    alert("Nenhum arquivo selecionado ou formato não suportado.");
+    return;
+  }
+  fs.readFile(filepath, "utf-8", (err, data) => {
+    if (err) {
+      alert("Um erro ocorreu ao abrir arquivo:" + err.message);
+      return;
+    }
+    // Adiciona o conteúdo do arquivo ao editor  
+    context.content = data;
+  });
+    },
+    saveFile() {
+       // Salva arquivo 
+        const filenameToSave = remote.dialog.showSaveDialog();
+  /* Verifica se o arquivo contém formato suportado e adiciona ao nome do arquivo  o 		  formato .escola_js */	
+  const filePathToSave = filenameToSave.includes(".escola_js")
+    ? filenameToSave : `${filenameToSave}.escola_js`;
+    
+  fs.writeFile(filePathToSave, this.content, err => {
+    if (err) throw err;
+      alert("Arquivo salvo com sucesso!");
+    });
+    }
+  }
 
 }
 </script>
@@ -72,6 +108,9 @@ export default {
   line-height: 3em;
   text-indent: 1rem;
   font-weight: bold;
+}
+button {
+  margin: 5px 5px 5px 5px;
 }
 </style>
 

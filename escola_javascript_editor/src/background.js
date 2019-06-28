@@ -25,15 +25,16 @@ handlers: { emoji: () => {} }
             highlight: text => hljs.highlightAuto(text).value
           },
 handlers: { emoji: () => {} }
-          },
+          ,
           syntax: {
             highlight: text => hljs.highlightAuto(text).value
           },
 handlers: { emoji: () => {} }
-          },
+          ,
           syntax: {
             highlight: text => hljs.highlightAuto(text).value
           },
+  })
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
